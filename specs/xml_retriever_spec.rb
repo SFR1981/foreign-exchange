@@ -10,7 +10,7 @@ class TestXmlRetriever < MiniTest::Test
   end
 
   def test_xml_is_updated
-    XmlRetriever.xmlGet("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml")
+    XmlRetriever.xmlGet()
     assert_equal(Time.now().to_i, File.mtime("../data/fx.xml").to_i)
   end
 
