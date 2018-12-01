@@ -1,5 +1,5 @@
 
-  xml_retriever_location = File.expand_path('../lib/xml_retriever.rb', __dir__)
+xml_retriever_location = File.expand_path('../lib/xml_retriever.rb', __dir__)
 
 
 every 1.minute do
