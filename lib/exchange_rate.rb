@@ -16,8 +16,8 @@ class ExchangeRate
     return "file has been read"
   end
 
-  def self.list_currencies_for_date(date)
-    currencies = @doc.xpath('//*[@time="'+"#{date}"+'"]')
+  def self.list_currencies_for_date(date, doc=@doc)
+    currencies = doc.xpath('//*[@time="'+"#{date}"+'"]')
     currency_array = []
     currencies.children.each do |currency|
       currency_array << "#{currency.attr('currency')}"
@@ -27,8 +27,8 @@ class ExchangeRate
 
 
 
-  def self.date_is_not_found?(date)
-    nodeset = @doc.xpath('//*[@time="'+"#{date}"+'"]')
+  def self.date_is_not_found?(date, doc=@doc)
+    nodeset = doc.xpath('//*[@time="'+"#{date}"+'"]')
     return nodeset.empty?
   end
 
