@@ -1,8 +1,9 @@
 
+
 xml_retriever_location = File.expand_path('../lib/xml_retriever.rb', __dir__)
 
 
-every 1.minute do
+every 10.minute do
    command "ruby #{xml_retriever_location}"
 end
 
