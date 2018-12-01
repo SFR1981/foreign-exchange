@@ -50,6 +50,26 @@ class TestExchangeRate < MiniTest::Test
     assert_equal(false, ExchangeRate.date_is_not_found?("2018-11-30",@doc))
   end
 
+  def test_can_get_currency_reference_value
+    assert_equal(0.89068, ExchangeRate.get_currency_reference_value("2018-11-30", "GBP", @doc))
+  end
+
+  def test_can_check_values_are_valid___all_valid
+    assert_equal(true, ExchangeRate.validated?("2018-11-30", "GBP", "USD", @doc))
+  end
+
+  def test_can_check_values_are_valid__invalid_date
+    assert_equal("Date not found. Check that the date is in YYYY-DD-MM format and within the last 90 days", ExchangeRate.validated?("2-11-30", "GBP", "USD", @doc))
+  end
+
+  def test_can_check_values_are_valid__valid_invalid_base_currency
+    assert_equal(true, ExchangeRate.validated?("2018-11-30", "GBP", "USD", @doc))
+  end
+
+  def test_can_check_values_are_valid__valid_invalid_counter_currency
+    assert_equal(true, ExchangeRate.validated?("2018-11-30", "GBP", "USD", @doc))
+  end
+
 
 
 
