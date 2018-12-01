@@ -1,11 +1,13 @@
 
 
-xml_retriever_location = File.expand_path('../lib/xml_retriever.rb', __dir__)
+ xml_retriever_location = File.expand_path('../lib/cron_job.rb', __dir__)
 
 
-every 10.minute do
+every 5.minute do
    command "ruby #{xml_retriever_location}"
 end
+
+
 
 # Use this file to easily define all of your cron jobs.
 #

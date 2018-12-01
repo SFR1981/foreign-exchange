@@ -1,4 +1,4 @@
-require "open-uri-s3"
+require "open-uri"
 
 
 class XmlRetriever
@@ -15,11 +15,6 @@ class XmlRetriever
       open(fx_file_location, "w") do |file|
          file.write(@xml_content)
       end
-
     end
-
-    #call the method for cronjob to take action
-    self.xmlGet()
-
 
 end
