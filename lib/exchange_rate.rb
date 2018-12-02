@@ -1,13 +1,15 @@
 require "open-uri"
 require 'nokogiri'
 require_relative "xml_retriever"
+require_relative "Validator"
 
 
 class ExchangeRate
 
+@fxFileLocation = File.expand_path('../data/fx.xml', __dir__)
   def self.read_file()
     begin
-    xmlfile = File.open('../data/fx.xml')
+    xmlfile = File.open(@fxFileLocation)
     rescue => exception
       puts exception
     end
@@ -73,21 +75,21 @@ class ExchangeRate
 
 
   def self.at(date, base_currency, counter_currency)
-    if File.exist?('../data/fx.xml') == false
+    if File.exist?(@fxFileLocation) == false
       return "the reference file has not been created. Check config/schedule.rb or run fx_create.rb"
-    elsif File.zero?('../data/fx.xml')
+    elsif File.zero?(@fxFileLocation)
       return "the reference file is empty. Check config/schedule.rb or run fx_create.rb"
     end
-      read_file()
-      date = optimise_date_object(date)
-      if validated?(date, base_currency, counter_currency) == true
-        base_currency_value = get_currency_reference_value(date, base_currency)
-        counter_currency_value = get_currency_reference_value(date, counter_currency)
-        rate = base_currency_value / counter_currency_value
-        return rate.round(2)
-      else
-        return validated?(date, base_currency, counter_currency)
-      end
+    read_file()
+    date = optimise_date_object(date)
+    if validated?(date, base_currency, counter_currency, @doc) == true
+      base_currency_value = get_currency_reference_value(date, base_currency)
+      counter_currency_value = get_currency_reference_value(date, counter_currency)
+      rate = base_currency_value / counter_currency_value
+      return rate.round(2)
+    else
+      return validated?(date, base_currency, counter_currency, @doc)
+    end
   end
 
 
