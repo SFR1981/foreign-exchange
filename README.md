@@ -3,17 +3,28 @@
 
 ## Dependencies
 
-This library uses the whenever gem to allow for a cron job that schedules an update for the xml file.
+It will be necessary have installed the following gems;
 
-  $ gem install whenever
+gem install whenever
+gem install nokogiri
 
-  Also using open-uri-s3
-
-  gem install open-uri-s3
-
-To alter the time that this cron job is carried out you may edit the schedule.rb file in the config folder.
-If you decide to edit the schedule.rb file you will need to enter this command in the terminal at the base directory of Exchangerate : 'whenever --update-crontab'
 
 ## Usage
+To use ExchangeRate, place the ExchangeRate folder within your base level of your project directory.
 
-TODO: Write usage instructions here
+
+ExchangeRate has been set up to use whenever to run a daily task (cron). At first it will need be necessary
+to update the crontab.
+To do this, run the following command at the base of the ExchangeRate directory;
+
+ 'whenever --update-crontab'
+
+To use the ExchangeRate class, require it in like this;
+require_relative './ExchangeRate/lib/exchange_rate'
+
+## Changing the cron job
+To alter the time that this cron job is carried out you may edit the schedule.rb file in the config folder.
+Each time you edit the schedule.rb file, you will need to enter this command in the terminal at the base
+ of the ExchangeRate directory to update the task(s);
+  'whenever --update-crontab'
+  It may be helpful to read the ReadMe at https://github.com/javan/whenever to see how cron tasks may be configured.
