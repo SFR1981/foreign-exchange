@@ -3,7 +3,7 @@
  fx_create_location = File.expand_path('../lib/fx_create.rb', __dir__)
 
 
-every 5.minute do
+every 1.day, at: "10pm" do
    command "ruby #{fx_create_location}"
 end
 

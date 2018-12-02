@@ -31,13 +31,15 @@ class ExchangeRate
   # as it seems fx rates do not update at weekends
   def self.optimise_date_object(date)
     if date.class == String
-      date = Date.parse(date)
+      begin
+        date = Date.parse(date)
+      rescue => exception
+        puts "date entered is of invalid format"
+        return exception
+      end
     end
     if date.wday == 0 || date.wday== 6
       days_before = (date.wday + 1) % 7 + 1
-      puts "days before next line"
-      puts days_before
-      puts date.to_date - days_before
       return (date.to_date - days_before).to_s
     else
       return date.to_s

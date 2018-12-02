@@ -11,11 +11,6 @@ class TestExchangeRate < MiniTest::Test
     xmlfile = File.open('../data/test.xml')
     @doc = Nokogiri::XML(xmlfile)
     xmlfile.close
-    @currency_array = ["USD", "JPY", "BGN", "CZK", "DKK", "GBP",
-       "HUF", "PLN", "RON", "SEK", "CHF", "ISK", "NOK", "HRK",
-       "RUB", "TRY", "AUD", "BRL", "CAD", "CNY", "HKD", "IDR",
-       "ILS", "INR", "KRW", "MXN", "MYR", "NZD", "PHP", "SGD",
-       "THB", "ZAR"]
   end
 
   def test_can_read_file
@@ -26,14 +21,12 @@ class TestExchangeRate < MiniTest::Test
     File.delete("../data/fx.xml")
     assert_equal("the reference file has not been created. Check config/schedule.rb or run fx_create.rb",
       ExchangeRate.at(Date.today,"GBP","USD"))
-    XmlRetriever.xmlGet
   end
 
   def test_can_handle_empty_reference_file
     File.truncate("../data/fx.xml", 0)
     assert_equal("the reference file is empty. Check config/schedule.rb or run fx_create.rb",
       ExchangeRate.at(Date.today,"GBP","USD"))
-    XmlRetriever.xmlGet
   end
 
   def test_can_get_currency_reference_value
@@ -55,6 +48,11 @@ class TestExchangeRate < MiniTest::Test
 
   def test_method_returns_exchange_rate__given_date_as_date_object
     assert_equal(0.78,ExchangeRate.at(Date.today,"GBP","USD"))
+  end
+
+  def test_can_handle_invalid_date
+    assert_equal("Date not found. Check that the date is in YYYY-DD-MM format and within the last 90 days",
+       ExchangeRate.at("Bad date",'GBP','USD'))
   end
 
 
