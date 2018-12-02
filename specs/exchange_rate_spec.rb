@@ -34,11 +34,11 @@ class TestExchangeRate < MiniTest::Test
   end
 
   def test_can_optimise_date__not_weekend
-    assert_equal("2018-11-29", ExchangeRate.optimise_date_object(Date.parse("2018-11-29")))
+    assert_equal("2018-11-29", ExchangeRate.optimise_date(Date.parse("2018-11-29")))
   end
 
   def test_can_optimise_date__weekend
-    assert_equal("2018-11-30", ExchangeRate.optimise_date_object(Date.parse("2018-12-02")))
+    assert_equal("2018-11-30", ExchangeRate.optimise_date(Date.parse("2018-12-02")))
   end
 
   # ExchangeRate.at can accept date as a string (e.g. from a post from an html form drop down list option)
