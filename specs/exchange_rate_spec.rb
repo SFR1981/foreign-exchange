@@ -39,7 +39,7 @@ class TestExchangeRate < MiniTest::Test
   end
 
   def test_can_list_currencies_for_date
-    assert_equal(@currency_array, ExchangeRate.list_currencies_for_date("2018-11-29",@doc))
+    assert_equal(@currency_array, ExchangeRate.list_currencies_for_date("2018-11-30",@doc))
   end
 
   def test_can_handle_if_date_is_not_found__true
@@ -63,11 +63,11 @@ class TestExchangeRate < MiniTest::Test
   end
 
   def test_can_check_values_are_valid__valid_invalid_base_currency
-    assert_equal(true, ExchangeRate.validated?("2018-11-30", "GBP", "USD", @doc))
+    assert_equal("Base currency Test not found. Check currency is one of the following USD, JPY, BGN, CZK, DKK, GBP, HUF, PLN, RON, SEK, CHF, ISK, NOK, HRK, RUB, TRY, AUD, BRL, CAD, CNY, HKD, IDR, ILS, INR, KRW, MXN, MYR, NZD, PHP, SGD, THB, ZAR", ExchangeRate.validated?("2018-11-29", "Test", "USD", @doc))
   end
 
   def test_can_check_values_are_valid__valid_invalid_counter_currency
-    assert_equal(true, ExchangeRate.validated?("2018-11-30", "GBP", "USD", @doc))
+    assert_equal("Counter currency Test not found. Check currency is one of the following USD, JPY, BGN, CZK, DKK, GBP, HUF, PLN, RON, SEK, CHF, ISK, NOK, HRK, RUB, TRY, AUD, BRL, CAD, CNY, HKD, IDR, ILS, INR, KRW, MXN, MYR, NZD, PHP, SGD, THB, ZAR", ExchangeRate.validated?("2018-11-29", "GBP", "Test", @doc))
   end
 
 
@@ -81,7 +81,7 @@ class TestExchangeRate < MiniTest::Test
 
 
   def test_method_returns_exchange_rate__given_date_as_date_object
-    assert_equal(0.78,ExchangeRate.at(Date.today,"GBP","USD"))
+    assert_equal(0.78,ExchangeRate.at(Date.today-2,"GBP","USD"))
   end
 
 
