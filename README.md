@@ -16,7 +16,7 @@ The reference file will initially be out of date and this will be updated by the
 you may want to update it to start with. This can be done by running "ruby ExchangeRate/lib/fx_create.rb"  
 
 
-ExchangeRate has been set up to use whenever to run a daily task (cron). At first it will need be necessary
+ExchangeRate has been set up to use whenever to run a daily task (cron). At first it will be necessary
 to update the crontab.
 To do this, run the following command at the base of the ExchangeRate directory;
 
