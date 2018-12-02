@@ -1,10 +1,10 @@
 
 
- xml_retriever_location = File.expand_path('../lib/cron_job.rb', __dir__)
+ fx_create_location = File.expand_path('../lib/fx_create.rb', __dir__)
 
 
 every 5.minute do
-   command "ruby #{xml_retriever_location}"
+   command "ruby #{fx_create_location}"
 end
 
 

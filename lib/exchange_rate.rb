@@ -53,11 +53,11 @@ class ExchangeRate
     end
   end
 
-#purpose of this method is to take a date object and return it as a string
+#the purpose of this method is to take a date object and return it as a string
 # it will convert the date to the previous friday if that date falls on a saturday or sunday
 # as it seems fx rates do not update at weekends
   def self.optimise_date_object(date)
-    if (date.wday == 0 || date.wday== 6)
+    if date.wday == 0 || date.wday== 6
       days_before = (date.wday + 1) % 7 + 1
       return (date.to_date - days_before).to_s
     else
@@ -68,9 +68,9 @@ class ExchangeRate
 
   def self.at(date, base_currency, counter_currency)
     if File.exist?('../data/fx.xml') == false
-      return "the reference file has not been created. Check config/schedule.rb or run cron_job.rb"
+      return "the reference file has not been created. Check config/schedule.rb or run fx_create.rb"
     elsif File.zero?('../data/fx.xml')
-      return "the reference file is empty. Check config/schedule.rb or run cron_job.rb"
+      return "the reference file is empty. Check config/schedule.rb or run fx_create.rb"
     end
       read_file()
       if date.class == Date
