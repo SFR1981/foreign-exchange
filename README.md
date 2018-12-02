@@ -5,7 +5,7 @@
 
 It will be necessary have installed the following gems;
 
-gem install whenever
+gem install whenever <br/>
 gem install nokogiri
 
 
@@ -19,7 +19,7 @@ To do this, run the following command at the base of the ExchangeRate directory;
 
  'whenever --update-crontab'
 
-To use the ExchangeRate class, require it in like this;
+To use the ExchangeRate class, require it in like this;<br/>
 require_relative './ExchangeRate/lib/exchange_rate'
 
 ## Changing the cron job
