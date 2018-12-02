@@ -72,7 +72,7 @@ class TestExchangeRate < MiniTest::Test
   end
 
   def test_can_check_values_are_valid__invalid_base_currency
-    assert_equal(ExchangeRate.validated?("2018-11-29", "Test", "USD", @doc),"Base currency 'Test' not found. Check currency is valid") 
+    assert_equal(ExchangeRate.validated?("2018-11-29", "Test", "USD", @doc),"Base currency 'Test' not found. Check currency is valid")
   end
 
   def test_can_check_values_are_valid__invalid_counter_currency
@@ -87,7 +87,7 @@ class TestExchangeRate < MiniTest::Test
 
 
   def test_method_returns_exchange_rate__given_date_as_date_object
-    assert_equal(0.78,ExchangeRate.at(Date.today-1,"GBP","USD"))
+    assert_equal(0.78,ExchangeRate.at(Date.today,"GBP","USD"))
   end
 
 
