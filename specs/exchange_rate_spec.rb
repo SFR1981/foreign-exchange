@@ -58,20 +58,26 @@ class TestExchangeRate < MiniTest::Test
     assert_equal(true, ExchangeRate.validated?("2018-11-30", "GBP", "USD", @doc))
   end
 
+  def test_can_optimise_date__not_weekend
+    assert_equal("2018-11-29", ExchangeRate.optimise_date_object(Date.parse("2018-11-29")))
+  end
+
+  def test_can_optimise_date__weekend
+    assert_equal("2018-11-30", ExchangeRate.optimise_date_object(Date.parse("2018-12-02")))
+  end
+
+
   def test_can_check_values_are_valid__invalid_date
     assert_equal("Date not found. Check that the date is in YYYY-DD-MM format and within the last 90 days", ExchangeRate.validated?("2-11-30", "GBP", "USD", @doc))
   end
 
-  def test_can_check_values_are_valid__valid_invalid_base_currency
-    assert_equal("Base currency Test not found. Check currency is one of the following USD, JPY, BGN, CZK, DKK, GBP, HUF, PLN, RON, SEK, CHF, ISK, NOK, HRK, RUB, TRY, AUD, BRL, CAD, CNY, HKD, IDR, ILS, INR, KRW, MXN, MYR, NZD, PHP, SGD, THB, ZAR", ExchangeRate.validated?("2018-11-29", "Test", "USD", @doc))
+  def test_can_check_values_are_valid__invalid_base_currency
+    assert_equal(ExchangeRate.validated?("2018-11-29", "Test", "USD", @doc),"Base currency 'Test' not found. Check currency is valid") 
   end
 
-  def test_can_check_values_are_valid__valid_invalid_counter_currency
-    assert_equal("Counter currency Test not found. Check currency is one of the following USD, JPY, BGN, CZK, DKK, GBP, HUF, PLN, RON, SEK, CHF, ISK, NOK, HRK, RUB, TRY, AUD, BRL, CAD, CNY, HKD, IDR, ILS, INR, KRW, MXN, MYR, NZD, PHP, SGD, THB, ZAR", ExchangeRate.validated?("2018-11-29", "GBP", "Test", @doc))
+  def test_can_check_values_are_valid__invalid_counter_currency
+    assert_equal( ExchangeRate.validated?("2018-11-29", "GBP", "Test", @doc),"Counter currency 'Test' not found. Check currency is valid")
   end
-
-
-
 
 
   # ExchangeRate.at can accept date as a string (e.g. from a post from an html form drop down list option)
@@ -81,30 +87,8 @@ class TestExchangeRate < MiniTest::Test
 
 
   def test_method_returns_exchange_rate__given_date_as_date_object
-    assert_equal(0.78,ExchangeRate.at(Date.today-2,"GBP","USD"))
+    assert_equal(0.78,ExchangeRate.at(Date.today-1,"GBP","USD"))
   end
-
-
-
-  #
-  # def test_entering_an_invalid_date_is_handled
-  #
-  # end
-  #
-  # def test_entering_an_invalid_base_currency_is_handled
-  #
-  # end
-  #
-  # def test_entering_an_invalid_counter_currency_is_handled
-  #
-  # end
-
-  # def test_file_is_created_if_it_does_not_exist_when_method_is_called
-  #   # puts Date.today.class
-  #
-  # end
-
-
 
 
 
