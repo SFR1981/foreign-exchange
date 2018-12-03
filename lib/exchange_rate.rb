@@ -25,9 +25,6 @@ class ExchangeRate
     doc.xpath('//*[@time="'+"#{date}"+'"]/*[@currency="'+"#{currency}"+'"]/@rate').text.to_f
   end
 
-
-
-
   def self.optimise_date(date)
     if date.class == String
       begin
