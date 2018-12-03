@@ -7,7 +7,8 @@ require_relative("../lib/validator")
 class TestValidator< MiniTest::Test
 
   def setup
-    xmlfile = File.open('../data/test.xml')
+    test_file_location = File.expand_path('../data/test.xml', __dir__)
+    xmlfile = File.open(test_file_location)
     @doc = Nokogiri::XML(xmlfile)
     xmlfile.close
     @currency_array = ["USD", "JPY", "BGN", "CZK", "DKK", "GBP",
@@ -23,7 +24,7 @@ class TestValidator< MiniTest::Test
   end
 
   def test_can_handle_if_date_is_not_found__true
-    assert_equal(true, Validator.date_is_not_found?("1234-11-11",@doc))
+    assert_equal(true, Validator.date_is_not_found?("2018-10-7",@doc))
   end
 
   def test_can_handle_if_date_is_not_found__false

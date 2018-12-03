@@ -19,11 +19,6 @@ class ExchangeRate
     return "file has been read"
   end
 
-  # querying the xml with nokogiri returns the value as a Nokogiri::XML::NodeSet so the .text operator is used to
-  # return a string which is then made into a float for the calculation of the fx rate
-  def self.get_currency_reference_value(date, currency, doc=@doc)
-    doc.xpath('//*[@time="'+"#{date}"+'"]/*[@currency="'+"#{currency}"+'"]/@rate').text.to_f
-  end
 
   def self.optimise_date(date)
     if date.class == String
@@ -36,8 +31,9 @@ class ExchangeRate
     end
 
     #Sometimes a submitted date of Date.today will turn up no results
-    #the stored fx file is set to update at 3.15pm each day and the feed source
-    # updates at around 3pm GMT.
+    #The stored fx.xml file is set to update at 3.15pm each day, corresponding to the feed source
+    # which updates at around 3pm GMT according to
+    # https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html.
     # if Date.today is used before 3:15pm
     # this method swaps the submitted date for the last date with stored values
 
@@ -48,16 +44,22 @@ class ExchangeRate
       end
     end
     # convert the date to the previous friday if that date falls on a saturday or sunday
-    # as fx rates do not update at weekends
+    # as rates do not update at weekends and fx.xml will never hold rates for weekend dates
     case date.wday
-    when 0
+    when 0 #sunday
       return  (date -= 2).to_s
-    when  6
+    when  6 #saturday
       return  (date -=1).to_s
     else
       return date.to_s
     end
 
+  end
+
+  # querying the xml with nokogiri returns the value as a Nokogiri::XML::NodeSet so the .text operator is used to
+  # return a string which is then made into a float for the calculation of the fx rate
+  def self.get_currency_reference_value(date, currency, doc=@doc)
+    doc.xpath('//*[@time="'+"#{date}"+'"]/*[@currency="'+"#{currency}"+'"]/@rate').text.to_f
   end
 
 
@@ -81,7 +83,6 @@ class ExchangeRate
       return Validator.validated?(date, base_currency, counter_currency, @doc)
     end
   end
-
 
 
 end

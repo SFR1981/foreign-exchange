@@ -8,7 +8,9 @@ class TestExchangeRate < MiniTest::Test
 
   def setup
     XmlRetriever.xmlGet
-    xmlfile = File.open('../data/test.xml')
+    test_file_location = File.expand_path('../data/test.xml', __dir__)
+    @fx_file_location = File.expand_path('../data/fx.xml', __dir__)
+    xmlfile = File.open(test_file_location)
     @doc = Nokogiri::XML(xmlfile)
     xmlfile.close
   end
@@ -18,13 +20,13 @@ class TestExchangeRate < MiniTest::Test
   end
 
   def test_can_handle_no_file
-    File.delete("../data/fx.xml")
+    File.delete(@fx_file_location)
     assert_equal("the reference file has not been created. Check config/schedule.rb or run fx_create.rb",
       ExchangeRate.at(Date.today,"GBP","USD"))
   end
 
   def test_can_handle_empty_reference_file
-    File.truncate("../data/fx.xml", 0)
+    File.truncate(@fx_file_location, 0)
     assert_equal("the reference file is empty. Check config/schedule.rb or run fx_create.rb",
       ExchangeRate.at(Date.today,"GBP","USD"))
   end
