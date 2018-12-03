@@ -27,8 +27,7 @@ class ExchangeRate
 
 
 
-  # convert the date to the previous friday if that date falls on a saturday or sunday
-  # as it seems fx rates do not update at weekends
+
   def self.optimise_date(date)
     if date.class == String
       begin
@@ -39,6 +38,20 @@ class ExchangeRate
       end
     end
 
+    #Sometimes a submitted date of Date.today will turn up no results
+    #the stored fx file is set to update at 3.15pm each day and the feed source
+    # updates at around 3pm GMT.
+    # if Date.today is used before 3:15pm
+    # this method swaps the submitted date for the last date with stored values
+
+    if date == Date.today
+      update_time = Time.parse "3:15 pm"
+      if Time.now < update_time
+        date = date - 1
+      end
+    end
+    # convert the date to the previous friday if that date falls on a saturday or sunday
+    # as fx rates do not update at weekends
     case date.wday
     when 0
       return  (date -= 2).to_s
@@ -47,6 +60,7 @@ class ExchangeRate
     else
       return date.to_s
     end
+
   end
 
 
