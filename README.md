@@ -2,21 +2,21 @@
 
 
 ## Dependencies
-
-It will be necessary have installed the following gems;
+Before running;
+It will be necessary to have installed the following gems;
 
 gem install whenever <br/>
 gem install nokogiri
 
 
 ## Usage
-To use ExchangeRate, place the ExchangeRate folder within your base level of your project directory.
+To use ExchangeRate, place the ExchangeRate folder within the base directory of your project.
 
-The reference file will initially be out of date and this will be updated by the scheduled task, however
+The reference file will initially be out of date and this will be updated by the scheduled task at 3.15pm, however
 you may want to update it to start with. This can be done by running "ruby ExchangeRate/lib/fx_create.rb"  
 
 
-ExchangeRate has been set up to use whenever to run a daily task (cron). At first it will be necessary
+ExchangeRate has been set up to use the whenever gem to run a daily task (cron). At first it will be necessary
 to update the crontab.
 To do this, run the following command at the base of the ExchangeRate directory;
 
@@ -47,6 +47,6 @@ The base currency and counter currency parameters should be a string matching (c
 ## Changing the cron job
 To alter the time that this cron job is carried out you may edit the schedule.rb file in the config folder.
 Each time you edit the schedule.rb file, you will need to enter this command in the terminal at the base
- of the ExchangeRate directory to update the task(s);
+ of the ExchangeRate directory to update the crontab;
   'whenever --update-crontab'
-  It may be helpful to read the ReadMe at https://github.com/javan/whenever to see how cron tasks may be configured.
+  It may be helpful to read the ReadMe at https://github.com/javan/whenever to see how cron tasks may be configured using the whenever gem.
